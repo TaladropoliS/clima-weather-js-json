@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>App Clima FTV </title>
+    <script>
+        $(document).ready(function() {
+
+            $('form').submit(function() {
+                // alert("Submitted");
+
+                var ciudad = document.getElementById("ciudad").value;
+                /* console.log(ciudad); */
+
+                $.get("https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&units=metric&appid=1409d5e8b465196481c3d35ff0c05378", function(res) {
+                    $('#nombre').html('<h3>' + res.name + ': cielo ' + res.weather[0].description + '</h3>');
+                    $('#temperatura').html('<h3>Temperatura: ' + res.main.temp + ' °C</h3>');
+                    $('#ubicacion').html('<h3>Lat: ' + res.coord.lat + ' | Lon: ' + res.coord.lon + '</h3>'); // es una lista ?
+                }, 'json');
+
+                return false;
+            })
+
+            // me muestra por consola el JSON con la nformacion de la api
+            /* $.get("https://api.openweathermap.org/data/2.5/weather?q=Temuco&units=metric&appid=1409d5e8b465196481c3d35ff0c05378", function(res) {
+                console.log(res); //toda la info
+            }, 'json'); */
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="container p-5">
+        <div class="row" id="jumb">
+            <div class=" col-md-4 mx-auto text-center p-4">
+                <h4 class=" text-center " id="ing-city ">Clima City</h4>
+                <span id="error"></span>
+            </div>
+        </div>
+
+        <div class="card" id="row-form">
+            <form action="" id="form" class="mx-auto text-center p-1">
+                <div class="card-body" id="div-form ">
+                    <input type="text " id="ciudad" class="form-control text-center" name="ciudad" placeholder="Ingresa la Ciudad:" autofocus required>
+                    <input class="btn btn-dark btn-block" id="btn-clima" type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+        <div class="jumbotron">
+            <div class="row">
+                <div id="nombre" class="col-m6 mx-auto text-center p-2"></div>
+            </div>
+            <div class="row">
+                <div id="temperatura" class="col-m6 mx-auto text-center p-2"></div>
+            </div>
+            <div class="row">
+                <div id="ubicacion" class="col-m6 mx-auto text-center p-2"></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
